@@ -35,26 +35,33 @@
 
           <div class="masthead clearfix">
             <div class="inner">
-              <h2 class="masthead-brand calligraphic">Toby</h2>
+              <h1 class="masthead-brand calligraphic" id="baby-name">Toby</h1>
               <ul class="nav masthead-nav">
-                <li class="active"><a href="#">Home</a></li>
+                <li class="active"><a href="#">Birth</a></li>
                 <li><a href="#">Features</a></li>
                 <li><a href="#">Contact</a></li>
               </ul>
             </div>
           </div>
 
-          <div class="inner cover">
-            <h1 class="cover-heading">Cover your page.</h1>
-            <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-            <p class="lead">
-              <a href="#" class="btn btn-lg btn-default">Learn more</a>
-            </p>
+          <div class="inner cover" id="baby-birth">
+            <h1 class="cover-heading"><span class="{{icon}}"></span> {{title}}<br><small><span id="time-ago"></span></small></h1>
+            <p class="lead">{{description}} @ <strong>{{place}}</strong></p>
+            <div class="row masonry">
+              {{#each photos}}
+                  <div class="mas-box col-xs-4 col-sm-2">
+                    <a href="#" class="thumbnail">
+                      <img src="/images/{{src}}" alt="...">
+                    </a>
+                  </div>
+              {{/each}}
+            </div>
+            <p class="lead"><a class="btn btn-default"><span class="fontawesome-comments"></span> 0 Comments</a></p>
           </div>
 
           <div class="mastfoot">
             <div class="inner">
-              <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+              <p><strong><a class="pull-left" href="#"><span class="fontawesome-double-angle-left"></span> Previous</a><a class="pull-right" href="#">Next <span class="fontawesome-double-angle-right"></span></a></strong></p>
             </div>
           </div>
 
@@ -70,10 +77,77 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/js-yaml/js-yaml.js"></script>
+    <script src="/moment/min/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/masonry/3.1.2/masonry.pkgd.js"></script>
+    <script src="http://desandro.github.io/imagesloaded/imagesloaded.pkgd.min.js"></script>
     <script>
+    var doc;
+    var currentago = 0;
     $(document).ready(function(){
-        console.log('Let\'s do this!')
+      $.ajax({
+        url: "/config.yml",
+        context: document.body
+      }).done(function(data) {
+        doc = jsyaml.load(data);
+        console.log(doc);
+        $("#baby-name").html(doc.baby.displayname);
+        registerbirth();
+
+        var $container = $('.masonry');
+        $container.imagesLoaded(function () {
+          $container.masonry({
+            itemSelector: '.mas-box',
+            columnWidth: '.mas-box',
+            transitionDuration: 0
+          });
+        });
+      });
+      setInterval('tick()', 1000)
     })
+
+    function tick()
+    {
+      if(currentago != 0)
+      {
+        $('#time-ago').html(currentago.fromNow())
+      }
+    }
+
+    function registerbirth(){
+      var template = Handlebars.compile($('#baby-birth').html());
+      var e = doc.events[0];
+      $('#baby-birth').html(template(e));
+      setPhoto(e.photos[Math.ceil(Math.random()*e.photos.length)-1].src);
+      currentago = moment(e.date+" "+e.time);
+      /*var s = "he";
+      if(doc.baby.sex == 'f')
+        s = "she";
+      $('#baby-birth').html(template({displayname: doc.baby.displayname, fullname: doc.baby.fullname, sex: s, birthplace: doc.birth.birthplace}));
+      setPhoto(doc.birth.photos[0])*/
+    }
+
+    function birth(){
+    }
+
+    function transitionOut(){
+      $('body').animate({
+        "margin-left": "-2000px",
+        opacity: 0
+      })
+    }
+    function transitionIn(){
+      $('body').css("margin-right", "-2000px");
+      $('body').css("margin-left", "0px");
+      $('body').animate({
+        "margin-right": "0px",
+        opacity: 1
+      })
+    }
+
+    function setPhoto(src){
+      $('.site-wrapper').css('background-image', "url('/images/"+src+"')")
+    }
     </script>
   
 

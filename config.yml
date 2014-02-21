@@ -1,6 +1,17 @@
 baby:
-    forename: Toby
-    middlename: Albert
-    surname: Lanyon-Royle
-    sex: m
-    dob: 7/2/2014
+  fullname: Toby Albert Lanyon-Royle
+  displayname: Toby
+  sex: m
+events:
+  - name: Birth
+    title: Toby's Birthday.
+    menu: true
+    icon: maki-pitch
+    place: The John Radcliffe Hospital Oxford
+    description: Welcome to the world Toby, time to make a mess!
+    date: 2014-02-07
+    time: 20:32
+    photos: 
+      - src: IMG_0012.jpg
+      - src: IMG_0007.jpg
+      - src: IMG_1970.jpg
