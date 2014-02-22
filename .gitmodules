@@ -1,9 +1,0 @@
-[submodule "js-yaml"]
-	path = js-yaml
-	url = git://github.com/nodeca/js-yaml.git
-[submodule "bootstrap"]
-	path = bootstrap
-	url = git://github.com/twbs/bootstrap.git
-[submodule "moment"]
-	path = moment
-	url = git://github.com/moment/moment.git
