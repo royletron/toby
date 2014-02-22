@@ -4,3 +4,6 @@
 [submodule "bootstrap"]
 	path = bootstrap
 	url = https://github.com/twbs/bootstrap.git
+[submodule "js-yaml"]
+	path = js-yaml
+	url = https://github.com/nodeca/js-yaml.git
