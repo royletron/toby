@@ -51,7 +51,7 @@
               {{#each photos}}
                   <div class="mas-box col-xs-4 col-sm-2">
                     <a href="#" class="thumbnail">
-                      <img src="/images/{{src}}" alt="...">
+                      <img src="images/{{src}}" alt="...">
                     </a>
                   </div>
               {{/each}}
@@ -86,7 +86,7 @@
     var currentago = 0;
     $(document).ready(function(){
       $.ajax({
-        url: "/config.yml",
+        url: "config.yml",
         context: document.body
       }).done(function(data) {
         doc = jsyaml.load(data);
@@ -146,7 +146,7 @@
     }
 
     function setPhoto(src){
-      $('.site-wrapper').css('background-image', "url('/images/"+src+"')")
+      $('.site-wrapper').css('background-image', "url('images/"+src+"')")
     }
     </script>
   
