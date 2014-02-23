@@ -13,5 +13,21 @@ events:
     time: 20:32
     photos: 
       - src: IMG_0012.jpg
+  - name: First Poop!
+    title: Toby does a poop.
+    icon: fontawesome-umbrella
+    place: The John Radcliffe Hospital Oxford
+    description: Not only a poop, but also managing to wee over daddy!
+    date: 2014-02-08
+    time: 6:20
+    photos: 
       - src: IMG_0007.jpg
-      - src: IMG_1970.jpg
+  - name: Second Poop!
+    title: Toby does a poop.
+    icon: fontawesome-umbrella
+    place: The John Radcliffe Hospital Oxford
+    description: Not only a poop, but also managing to wee over daddy!
+    date: 2014-02-08
+    time: 6:20
+    photos: 
+      - src: IMG_0007.jpg
