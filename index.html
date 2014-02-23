@@ -94,7 +94,7 @@
     var doc;
     var events = [];
     var currentago = 0;
-    var disqus_shortname;
+    var currentevent = 0;
 
     $(document).ready(function(){
 
@@ -103,7 +103,7 @@
         context: document.body
       }).done(function(data) {
         doc = jsyaml.load(data);
-        console.log(doc);
+        setupDisqus(doc.site_url);
         $("#baby-name").html(doc.baby.displayname);
 
         $.each(doc.events, function(idx,item){
@@ -128,7 +128,7 @@
 
         var app = $.sammy(function() {
 
-          this.get('/#:name', function() {
+          this.get('/#!:name/', function() {
             gotoEvent(this.params['name'])
           });
 
@@ -161,30 +161,7 @@
         tick();
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         document.title = doc.baby.displayname + " - "+e.title
-        if(disqus_shortname == undefined)
-        {
-          console.log('init disqus')
-          var disqus_shortname = 'toby-tron'; // required: replace example with your forum shortname
-          var disqus_identifier = e.slug;
-
-          var disqus_url = window.location.toString();
-          /* * * DON'T EDIT BELOW THIS LINE * * */
-          (function() {
-              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-              dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-
-          })();
-        }
-        else{
-          DISQUS.reset({
-            reload: true,
-            config: function () {  
-              this.page.identifier = e.slug;  
-              this.page.url = window.location.toString();
-            }
-          });
-        }
+        reset(e.slug, e.title)
       }
       
     }
@@ -241,6 +218,39 @@
       $('.site-wrapper').css('background-image', "url('images/"+src+"')")
     }
     </script>
-  
+    <script type="text/javascript">
+      var disqus_shortname = 'toby-tron';
+      function setupDisqus(url)
+      {
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_identifier = 'default';
+        var disqus_url = url;
+        var disqus_config = function () { 
+          this.language = "en";
+        };
+
+          /* * * DON'T EDIT BELOW THIS LINE * * */
+          (function() {
+              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+      };
+      /* * * Disqus Reset Function * * */
+      var reset = function (newIdentifier, newTitle) {
+        console.log(newIdentifier);
+        DISQUS.reset({
+          reload: true,
+          config: function () {
+              this.page.identifier = newIdentifier;
+              this.page.url = doc.site_url+"/#!"+newIdentifier+"/";
+              this.page.title = newTitle;
+              console.log("Identifier: "+this.page.identifier);
+              console.log("URL: "+this.page.url);
+              console.log("Title: "+this.page.title);
+          }
+        });
+      }
+    </script>
 
 </body></html>

@@ -1,3 +1,4 @@
+site_url: royletron.github.io/toby
 baby:
   fullname: Toby Albert Lanyon-Royle
   displayname: Toby
@@ -22,8 +23,8 @@ events:
     time: 6:20
     photos: 
       - src: IMG_0007.jpg
-  - name: Second Poop!
-    title: Toby does a poop.
+  - name: Ten Poop!
+    title: Tenth poop.
     icon: fontawesome-umbrella
     place: The John Radcliffe Hospital Oxford
     description: Not only a poop, but also managing to wee over daddy!
