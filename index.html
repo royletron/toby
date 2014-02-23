@@ -47,16 +47,21 @@
             <div id="baby-birth"></div>      
             
             <p class="lead">
-            <div id="disqus_thread" class="well" style="background-color:black"></div>
+            <div id="disqus_thread"></div>
             <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
             <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
             </p>
+
+            <ul class="pager">
+              <li id="previous-button" class="previous"><a href="#">&larr; Previous</a></li>
+              <li id="next-button" class="next"><a href="#">Next &rarr;</a></li>
+            </ul>
 
           </div>
 
           <div class="mastfoot">
             <div class="inner">
-              <p><strong><a class="pull-left" href="#"><span class="fontawesome-double-angle-left"></span> Previous</a><a class="pull-right" href="#next">Next <span class="fontawesome-double-angle-right"></span></a></strong></p>
+              <p></p>
             </div>
           </div>
 
@@ -157,7 +162,10 @@
       var e;
       $.each(doc.events, function(idx, item){
         if(item.slug == slug)
+        {
           e = item;
+          currentevent = idx;
+        }
       })
       if(e != undefined)
       {
@@ -172,6 +180,25 @@
         document.title = doc.baby.displayname + " - "+e.title
         //reset(e.slug, e.title)
         loadDisqus(e.slug, window.location.href);
+        if(currentevent == 0)
+        {
+          $('#previous-button').addClass('disabled');
+          $('#previous-button').attr('href','#');
+        }
+        else
+        {
+          $('#previous-button').removeClass('disabled');
+          $('#previous-button > a').attr('href', window.location.href.split('#!')[0]+'#!/'+doc.events[currentevent-1].slug+"/");
+        }
+        if(currentevent == (doc.events.length - 1))
+        {
+          $('#next-button').addClass('disabled')
+        }
+        else
+        {
+          $('#next-button').removeClass('disabled')
+          $('#next-button > a').attr('href', window.location.href.split('#!')[0]+'#!/'+doc.events[currentevent+1].slug+"/");
+        }
       }
       
     }
